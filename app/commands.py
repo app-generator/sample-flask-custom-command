@@ -20,16 +20,16 @@ def hello():
 @click.argument('filter', required=False)
 def config(filter=None):
     """ List all Config Variables """
-    print("Custom command - Cfg("+str(filter)+")")
+    print("Custom command - Cfg(Filter="+str(filter)+")")
     for key in current_app.config:
 
         val = str( current_app.config[key] )
 
         # Filtered config
         if filter:    
-            if re.search(filter, val, re.IGNORECASE):
-                print (  key  + ' -> ' + val )
+            if re.search(filter, key, re.IGNORECASE):
+                print (  '  |- ' + key  + ' -> ' + val )
 
         # Unfiltered config
         else:
-            print (  key  + ' -> ' + val )
+            print (  '  |- ' + key  + ' -> ' + val )
