@@ -1,6 +1,6 @@
 # Flask Command Line
 
-Flask Sample project that extends the classic Flask CLI with new commands. The code includes a few commands from a simple `hello` to something more useful like `listing` the application configuration. For newcomers, FLASK CLI gives access to the `application` context, database and helpers.  
+[Flask Command-Line](https://blog.appseed.us/flask-command-line-free-sample/) is an open-source sample project that extends the classic Flask CLI with new commands. The code includes a few commands from a simple `hello` to something more useful like `listing` the application configuration. For newcomers, FLASK CLI gives access to the `application` context, database and helpers.  
 
 <br />
 
