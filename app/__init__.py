@@ -6,9 +6,13 @@ Copyright (c) 2019 - present AppSeed.us
 from flask import Flask, url_for
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask.cli import with_appcontext
 from importlib import import_module
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
 from os import path
+
+# Integrate custom commands
+from .commands import commands
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -25,6 +29,7 @@ def register_blueprints(app):
 def configure_database(app):
 
     @app.before_first_request
+    @with_appcontext
     def initialize_database():
         db.create_all()
 
@@ -32,10 +37,18 @@ def configure_database(app):
     def shutdown_session(exception=None):
         db.session.remove()
 
+def configure_commands(app):
+    app.register_blueprint(commands)
+
 def create_app(config):
     app = Flask(__name__, static_folder='base/static')
     app.config.from_object(config)
     register_extensions(app)
     register_blueprints(app)
     configure_database(app)
+
+    # Define the custom commands
+    configure_commands(app)
+
+    # App is fully constructed
     return app
