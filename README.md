@@ -93,23 +93,48 @@ Custom command - Hello # <-- the output
 
 <br />
 
-> Command `cfg` 
+> Command `cfg` - Unfiltered output
 
 ```bash
-$ # Unfiltered output (all variables)
 $ flask commands cfg
 Custom command - Cfg(None)
   |- ENV -> production
   |- DEBUG -> False
   |- TESTING -> False
   |- PROPAGATE_EXCEPTIONS -> None
+  |- PRESERVE_CONTEXT_ON_EXCEPTION -> None
+  |- SECRET_KEY -> S3cr3t_K#Key
+  |- PERMANENT_SESSION_LIFETIME -> 31 days, 0:00:00
+  |- USE_X_SENDFILE -> False
+  |- SERVER_NAME -> None
+  |- APPLICATION_ROOT -> /
+  |- SESSION_COOKIE_NAME -> session
+  |- SESSION_COOKIE_DOMAIN -> None
+  |- SESSION_COOKIE_PATH -> None
+  |- SESSION_COOKIE_HTTPONLY -> True
+  |- SESSION_COOKIE_SECURE -> False
+  |- SESSION_COOKIE_SAMESITE -> None
 ...
-(truncate output)
-$
-$ # Filtered output 
+(truncated output)
+```
+
+<br />
+
+> Command `cfg` - Filtered output (case insensitive)
+
+```bash
+$ # Filter ouput that matches `database`  
 $ flask commands cfg database
 Custom command - Cfg(Filter=database)
   |- SQLALCHEMY_DATABASE_URI -> sqlite:///...\flask-command-line-blueprints\db.sqlite3
+$  
+$ # Filter ouput that matches `JSON`
+$ flask commands cfg JSON
+Custom command - Cfg(Filter=JSON)
+  |- JSON_AS_ASCII -> True
+  |- JSON_SORT_KEYS -> True
+  |- JSONIFY_PRETTYPRINT_REGULAR -> False
+  |- JSONIFY_MIMETYPE -> application/json
 ```
 
 <br />
@@ -127,7 +152,8 @@ The project is coded using blueprints, app factory pattern, dual configuration p
    |    |-- base/                # Base Blueprint - handles the authentication
    |    |-- home/                # Home Blueprint - serve UI Kit pages
    |    |
-   |   __init__.py               # Initialize the app
+   |   commands.py               # Defines the custom commands                 <-- NEW
+   |   __init__.py               # Initialize the app                          <-- UPDATED
    |
    |-- requirements.txt          # Development modules - SQLite storage
    |-- requirements-mysql.txt    # Production modules  - Mysql DMBS
