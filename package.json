@@ -1,14 +1,14 @@
 {
-    "name": "flask-black-dashboard",
-    "mastertemplate": "boilerplate-code-flask-dashboard",
-    "version": "1.0.3",
+    "name": "flask-command-line",
+    "mastertemplate": "flask-black-dashboard",
+    "version": "0.0.1",
     "description": "Template project - Flask Boilerplate Code",
     "repository": {
         "type": "git",
-        "url": "https://github.com/app-generator/flask-black-dashboard"
+        "url": "https://github.com/app-generator/flask-command-line"
     },
     "bugs": {
-        "url": "https://github.com/app-generator/flask-black-dashboard/issues",
+        "url": "https://github.com/app-generator/flask-command-line/issues",
         "email": "support@appseed.us"
     },
     "author": "AppSeed App Generator <support@appseed.us> (https://appseed.us)",
