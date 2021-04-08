@@ -1,32 +1,27 @@
 # Flask Command Line
 
-Flask Sample project that extends the classic Flask CLI with new commands. The code includes a few commands from a simple `hello` to something more useful like `loading` new information in the database. For newcomers, FLASK CLI gives access to the `application` context, database and helpers.  
-
-<br />
-
-> STATUS: Wip (work in progress)
+Flask Sample project that extends the classic Flask CLI with new commands. The code includes a few commands from a simple `hello` to something more useful like `listing` the application configuration. For newcomers, FLASK CLI gives access to the `application` context, database and helpers.  
 
 <br />
 
 > Features
 
-- Custom Commands
-    - Simple `Hello World` 
-    - Parse input File and load the information into the database
-- DB Tools: `SQLAlchemy` ORM, `Flask-Migrate` (schema migrations)
-- Permissive MIT License - allows unlimited copies for hobby and commercial products
+- Define a new Blueprint `commands`
+- Define Custom Command `hello` that echos a simple `Hello World`
+    - Usage: `flask commands hello`
+- Define Custom Command `cfg` that prints all configuration variables and optionally filter the output.
+    - Usage: `flask commands cfg` - print all variables used by the app
+    - Usage: `flask commands cfg SQL` - filtered output
 - Support via **Github** (issues tracker) and [Discord](https://discord.gg/fZC6hup).
 
 <br />
 
 > Implementation Summary
 
+- Create the [commands](./app/commands.py) Blueprint
+- Update the `app factory` to include and register the Blueprint
 - Code `Hello World` command
-- Define a new table `Stats` (will be used to save loaded data)
-- Code `Data Loader` command
-    - parse the information (csv format)
-    - load the information into `Stats` table 
-- Show the loaded information in charts
+- Code `Cfg` command
 
 <br />
 
@@ -60,18 +55,20 @@ $
 $ # Install modules - SQLite Database
 $ pip3 install -r requirements.txt
 $
-$ # OR with PostgreSQL connector
-$ # pip install -r requirements-pgsql.txt
+$ # List available commands 
+$ flask commands # commands = the name of the Blueprint
+$
+$ # Call Hello Command
+$ flask commands hello # this will print a dummy message
+$
+$ # Call CFG Command
+$ flask commands cfg     # list all variables
+$ flask commands cfg sql # filter the output that matches `SQL` 
 $
 $ # Set the FLASK_APP environment variable
 $ (Unix/Mac) export FLASK_APP=run.py
 $ (Windows) set FLASK_APP=run.py
 $ (Powershell) $env:FLASK_APP = ".\run.py"
-$
-$ # Set up the DEBUG environment
-$ # (Unix/Mac) export FLASK_ENV=development
-$ # (Windows) set FLASK_ENV=development
-$ # (Powershell) $env:FLASK_ENV = "development"
 $
 $ # Start the application (development mode)
 $ # --host=0.0.0.0 - expose the app on all network interfaces (default 127.0.0.1)
@@ -82,6 +79,38 @@ $ # Access the dashboard in browser: http://127.0.0.1:5000/
 ```
 
 > Note: To use the app, please access the registration page and create a new user. After authentication, the app will unlock the private pages.
+
+<br />
+
+## Sample Output
+
+> Command `hello` - to customize the message, open the [commands](./app/commands.py) file and update `hello()`
+
+```bash
+$ flask commands hello
+Custom command - Hello # <-- the output 
+```
+
+<br />
+
+> Command `cfg` 
+
+```bash
+$ # Unfiltered output (all variables)
+$ flask commands cfg
+Custom command - Cfg(None)
+  |- ENV -> production
+  |- DEBUG -> False
+  |- TESTING -> False
+  |- PROPAGATE_EXCEPTIONS -> None
+...
+(truncate output)
+$
+$ # Filtered output 
+$ flask commands cfg database
+Custom command - Cfg(Filter=database)
+  |- SQLALCHEMY_DATABASE_URI -> sqlite:///...\flask-command-line-blueprints\db.sqlite3
+```
 
 <br />
 
@@ -122,12 +151,6 @@ The project is coded using blueprints, app factory pattern, dual configuration p
 - Call the app factory method `create_app` defined in app/__init__.py
 - Redirect the guest users to Login page
 - Unlock the pages served by *home* blueprint for authenticated users
-
-<br />
-
-## Implementation details
-
-**@ToDo**
 
 <br />
 
