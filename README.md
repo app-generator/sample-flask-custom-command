@@ -2,7 +2,9 @@
 
 Flask Sample project that extends the classic Flask CLI with new commands. The code includes a few commands from a simple `hello` to something more useful like `loading` new information in the database. For newcomers, FLASK CLI gives access to the `application` context, database and helpers.  
 
-> STATUS: WIP (work in progress)
+<br />
+
+> STATUS: Wip (work in progress)
 
 <br />
 
